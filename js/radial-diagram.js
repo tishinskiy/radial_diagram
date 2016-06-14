@@ -13,27 +13,42 @@
 	$.fn.diagramCreate = function(options){
 
 		var domObject = $(this);
+		var w = domObject.innerWidth();
+		var h = domObject.innerHeight();
 
 		var init = function(){
 
 
 			var sectorProto = {
-				angle: 0,
 				constructor: function(value, background, procent) {
 					this.value = value;
 					this.background = background;
 					this.procent = procent;
+					this.draw();
 					return this;
 				},
+
 				draw: function(){
 					drawSector(this);
 				}
 			};
 
+			var levelProto = {
+				constructor: function(obj) {
+					this.start = obj.start;
+					this.finish = obj.finish;
+					this.sectors = obj.sectors;
+					this.draw();
+					return this;
+				},
+				draw: function(){
+					drawLevel(this);
+				}
+			};
 
 			var objParams = $.extend({}, defaults, options);
 			var ctxId = "canvas_diagram_"+idNum++;
-			var newCanvas = $('<canvas width="300" id="'+ctxId+'">Обновите браузер</canvas>');
+			var newCanvas = $('<canvas width="'+w+'" height="'+h+'" id="'+ctxId+'">Обновите браузер</canvas>');
 			var currentAngle = (objParams.angle * Math.PI / 180) -1.5708;
 			domObject.append(newCanvas);
 
@@ -63,17 +78,23 @@
 				currentAngle += angleRad;
 			}
 
+			var drawLevel = function(obj) {
+				console.log(obj);
+			}
+
 			var diagramm = {
 
 				center: [100, 100],
 				startRadius: 20,
 				fitishRadius: 100,
-				total: objParams.total,
+				// total: objParams.total,
+				levels: [],
 				sectors: [],
 
 				init: function(){
 
 					var sectors = this.sectors;
+					var levels = this.levels;
 					var total = 0;
 					var angle = 0;
 					var procent = 0;
@@ -81,16 +102,21 @@
 					var sectorCreate = function(value, background) {
 						procent = value * 100 / total;
 						angle = value * 360 / total;
-						var t = Object.create(sectorProto).constructor(value, background, procent);
-						sectors.push(t);
-						// console.log(t);
-						t.draw();
+						sectors.push(Object.create(sectorProto).constructor(value, background, procent));
+
+					}
+
+					if(objParams.levels) {
+						objParams.levels.forEach(function(item, i, arr){
+							levels.push(Object.create(levelProto).constructor(item));
+						});
 					}
 
 					if(Array.isArray(objParams.sectors)){
 						objParams.sectors.forEach(function(item, i, arr){
 							total += item.value;
 						});
+
 						objParams.sectors.forEach(function(item, i, arr){
 							sectorCreate(item.value, item.background, total);
 						});
