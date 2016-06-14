@@ -1,0 +1,15 @@
+* {
+	// padding: 0;
+	// margin: 0;
+}
+
+body {
+	background: #636363;
+}
+
+.diagram-block {
+	border: 1px solid #ccc;
+	width: 500px;
+	height: 300px;
+	margin-bottom: 20px;
+}
