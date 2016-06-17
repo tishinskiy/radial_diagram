@@ -6,22 +6,23 @@ $(function () {
 		bg: 'red',
 		levels: [
 			{
-				start: 20,
-				finish: 50,
+				start: 15,
+				finish: 55,
 				sectors: [
-					{value: 30, background: "#DAEE34"},
-					{value: 50, background: "#0BD2FD"},
+					{value: 20, background: "#DAEE34"},
+					{value: 40, background: "#0BD2FD"},
 					{value: 78, background: "#FDAE05"},
 				]
 			},
 			
 			{
-				start: 55,
-				finish: 75,
+				start: 70,
+				finish: 95,
 				sectors: [
-					{value: 30, background: "#DAEE34"},
+					{value: 30, background: "#A1EE34"},
 					{value: 50, background: "#0BD2FD"},
-					{value: 78, background: "#FDAE05"},
+					{value: 20, background: "#053AA6"},
+					{value: 78, background: "#FD6E05"},
 				]
 			}
 		]
