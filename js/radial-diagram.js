@@ -4,10 +4,6 @@
 
 	var defaults = {
 		angle: 0,
-		name: 'noname',
-		age: 12,
-		bg: "#ccc",
-		total: 3,
 		sectors: {value: 1, background: "#2753B7"}
 	}
 	$.fn.diagramCreate = function(options){
@@ -38,9 +34,11 @@
 			};
 
 			var levelProto = {
+				// angle: 0,
 				constructor: function(obj) {
 					this.start = obj.start;
 					this.finish = obj.finish;
+					this.angle = obj.angle;
 					this.sectors = obj.sectors;
 					this.draw();
 					return this;
@@ -64,17 +62,14 @@
 
 			var drawSector = function(obj, start=20, finish=50, shadow=false) {
 
+				// this.angle.__parent(angle);
+
 				if(obj.start) {start = obj.start;}
 				if(obj.finish) {finish = obj.finish;}
 
 				var angle = 360 * obj.procent / 100;
 				var angleRad = angle * Math.PI / 180;
 				ctx.fillStyle = obj.background;
-				if(shadow === true) {
-					console.log(1);
-					ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-					ctx.shadowBlur = 20;
-				}
 				ctx.beginPath();
 
 
@@ -84,6 +79,13 @@
 				ctx.lineTo(Math.cos(currentAngle + angleRad)*start + w/2, Math.sin(currentAngle + angleRad)*start + h/2);
 				ctx.arc(w/2, h/2, start, currentAngle + angleRad, currentAngle, true);
 
+				if(shadow === true) {
+					ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+					ctx.shadowBlur = 20;
+				}
+				else {
+					ctx.shadowBlur = 0;
+				}
 
 				ctx.fill();
 				ctx.closePath;
@@ -92,14 +94,17 @@
 			}
 
 			var drawLevel = function(obj) {
-				// console.log(obj);
 
 				var newLevel = {
 					value: 1,
-					// background: "rgba(100, 100, 100, 0.5)",
-					background: "red",
+					background: "rgba(100, 100, 100, 0.5)",
 					procent: 100,
 				}
+
+				if(obj.angle) {
+					currentAngle = (obj.angle * Math.PI / 180) -1.5708;
+				}
+
 
 				drawSector(newLevel, obj.start, obj.finish, shadow = true);
 
@@ -125,7 +130,7 @@
 					});
 				}
 				else {
-					sectors.push(Object.create(sectorProto).constructor(obj.sectors.value, obj.sectors.background));
+					obj.sectors.push(Object.create(sectorProto).constructor(obj.sectors.value, obj.sectors.background));
 					total = obj.sectors.value;
 					sectorCreate(obj.sectors.value, obj.sectors.background);
 				}
@@ -176,17 +181,15 @@
 						total = objParams.sectors.value;
 						sectorCreate(objParams.sectors.value, objParams.sectors.background );
 					}
-					// console.log(this.sectors);
-					// ctx.arc(x, y, radius, startAngle, endAngle, antiClockwise);
 				}
 			};
 
 			diagramm.init();
-
 		}
 
 		init();
 	}
+
 })(jQuery);
 
 

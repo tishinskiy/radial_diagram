@@ -1,9 +1,7 @@
 $(function () {
 
-
 	$("#ib1").diagramCreate({
-		name: 'Vasiliy',
-		bg: 'red',
+
 		levels: [
 			{
 				start: 15,
@@ -14,29 +12,27 @@ $(function () {
 					{value: 78, background: "#FDAE05"},
 				]
 			},
-			
 			{
 				start: 70,
 				finish: 95,
+				angle: 15,
 				sectors: [
-					{value: 30, background: "#A1EE34"},
+					{value: 30, background: "#7DCF09"},
 					{value: 50, background: "#0BD2FD"},
 					{value: 20, background: "#053AA6"},
 					{value: 78, background: "#FD6E05"},
+					{value: 60, background: "#A91008"},
+				]
+			},
+			{
+				start: 100,
+				finish: 120,
+				angle: -25,
+				sectors: [
+					{value: 30, background: "#DFFFB1"},
+					{value: 30, background: "#B1ECFF"},
 				]
 			}
-		]
-	});
-
-	$("#ib2").diagramCreate({
-		angle: 25,
-		// name: 'Vasiliy',
-		sectors: [
-			{value: 30, background: "#FCFF00"},
-			{value: 20, background: "#eeeeee"},
-			{value: 50, background: "#C03E8E"},
-			{value: 50, background: "#FF6009"},
-			{value: 15, background: "#6C37F1"},
 		]
 	});
 });
