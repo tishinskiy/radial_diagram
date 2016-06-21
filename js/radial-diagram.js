@@ -142,7 +142,6 @@
 				center: [100, 100],
 				startRadius: 20,
 				fitishRadius: 100,
-				// total: objParams.total,
 				levels: [],
 				sectors: [],
 
